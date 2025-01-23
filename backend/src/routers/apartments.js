@@ -20,13 +20,14 @@ apartmentsRouter.get("/", ctrlWraper(getAllApartmentsController));
 
 apartmentsRouter.post(
   "/",
-  // upload.array("photos", 10),
+  upload.array("photos", 10),
   validateBody(apartmentAddSchema),
   ctrlWraper(createApartmentController)
 );
 
 apartmentsRouter.delete(
   "/:id",
+  isValidId,
   ctrlWraper(deleteApartmentController)
 );
 

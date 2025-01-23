@@ -27,7 +27,7 @@ export const getAllApartmentsController = async (req, res) => {
 };
 
 export const createApartmentController = async (req, res) => {
-    console.log(req.body);
+
     let photo = null;
 
     if (req.file) {

@@ -1,0 +1,31 @@
+.header {
+    display: flex;
+    background-color:#f7f7f7;
+    align-items: center;
+    justify-content: space-between;
+     padding: 24px 64px;
+     border-bottom: 1px solid grey;
+}
+
+.logo {
+    font-weight: 700;
+}
+
+.logoSpan {
+    color: coral;
+}
+
+.navigation {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 15px;
+}
+
+.navLink {
+    padding: 10px;
+    background-color: rgb(224, 224, 224);
+    border-radius: 10px;
+    color: coral;
+    font-weight: 500;
+}
