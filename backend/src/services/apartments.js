@@ -26,7 +26,7 @@ export const getAllApartments = async ({
     apartmentsQuery.where("rooms").gte(filter.minRooms);
   }
 
-  const [apartmentsCount, apartments] = await Promise.all([
+  const [apartmentsCount, data] = await Promise.all([
     ApartmentCollection.find().merge(apartmentsQuery).countDocuments(),
     apartmentsQuery
       .skip(skip)
@@ -40,7 +40,7 @@ export const getAllApartments = async ({
     page
   );
   return {
-    data: apartments,
+    data,
     ...paginationData,
   };
 };

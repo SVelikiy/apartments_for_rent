@@ -1,4 +1,5 @@
 import css from './header.module.css'
+import { NavLink } from "react-router-dom";
 
 export default function Header() {
   return (
@@ -7,9 +8,15 @@ export default function Header() {
         RENT <span className={css.logoSpan}>APP</span>
       </p>
       <nav className={css.navigation}>
-        <a className={css.navLink}>Home</a>
-        <a className={css.navLink}>Catalog</a>
-        <a className={css.navLink}>Rent apartment</a>
+        <NavLink to="/" className={css.navLink}>
+          Home
+        </NavLink>
+        <NavLink to="/catalog" className={css.navLink}>
+          Catalog
+        </NavLink>
+        <NavLink to="/" className={css.navLink}>
+          Rent apartment
+        </NavLink>
       </nav>
     </header>
   );
