@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.title {
+    color: coral;
+}
+
+.text {
+    font-size: 18px;
+}
+
+.textSpan {
+    color: coral;
+}

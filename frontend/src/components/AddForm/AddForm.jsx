@@ -3,34 +3,39 @@ import { nanoid } from "nanoid";
 import * as Yup from "yup";
 import css from "./AddForm.module.css";
 import { useDispatch } from "react-redux";
-import { addApartment } from "../../redux/apartments/operations";
+import {
+  addApartment,
+  updateApartment,
+  fetchFilteredApartments,
+} from "../../redux/apartments/operations";
 
 const ApartmentSchema = Yup.object().shape({
   title: Yup.string()
-    .min(2, "Too short,min 2 letters")
-    .max(90, "Too long,max 15 letters")
+    .min(2, "Too short, minimum 2 characters")
+    .max(90, "Too long, maximum 90 characters")
     .required("This field is required"),
   info: Yup.string()
-    .min(2, "Too short,min 2 letters")
-    .max(335, "Too long,max 15 letters")
+    .min(2, "Too short, minimum 2 characters")
+    .max(335, "Too long, maximum 335 characters")
     .required("This field is required"),
-  price: Yup.string()
-    .min(1, "Too cheap,min 1 dollar")
-    .max(10000, "Too much,max 10000 dollar's")
+  price: Yup.number()
+    .min(1, "Too cheap, minimum $1")
+    .max(10000, "Too expensive, maximum $10,000")
     .required("This field is required"),
-  rooms: Yup.string()
-    .min(1, "Min 1 room")
-    .max(3, "Max 3 rooms")
+  rooms: Yup.number()
+    .min(1, "Minimum 1 room")
+    .max(3, "Maximum 3 rooms")
     .required("This field is required"),
 });
 
-export default function AddForm({ onClose }) {
+export default function AddForm({ onClose, apartment = {}, filters = {} }) {
   const apartmentInfo = {
-    title: "",
-    info: "",
-    price: "",
-    rooms: "",
+    title: apartment.title || "",
+    info: apartment.info || "",
+    price: apartment.price || "",
+    rooms: apartment.rooms || "",
   };
+  console.log(Object.keys(apartment).length);
 
   const titleId = nanoid();
   const infoId = nanoid();
@@ -39,24 +44,31 @@ export default function AddForm({ onClose }) {
 
   const dispatch = useDispatch();
 
-  function handleSubmit(values, actions) {
-    dispatch(
-      addApartment({
-        title: values.title,
-        info: values.info,
-        price: values.price,
-        rooms: values.rooms,
-      })
-    );
+  const handleUpdate = async (values, actions) => {
+    if (Object.keys(apartment).length === 0) {
+      dispatch(
+        addApartment({
+          title: values.title,
+          info: values.info,
+          price: values.price,
+          rooms: values.rooms,
+        })
+      );
+      actions.resetForm();
+      onClose();
+      return;
+    }
+    await dispatch(updateApartment({ _id: apartment._id, payload: values }));
+    dispatch(fetchFilteredApartments(filters));
     actions.resetForm();
-    onClose()
-  }
+    onClose();
+  };
 
   return (
     <div>
       <Formik
         initialValues={apartmentInfo}
-        onSubmit={handleSubmit}
+        onSubmit={handleUpdate}
         validationSchema={ApartmentSchema}
       >
         <Form className={css.form}>
@@ -89,7 +101,9 @@ export default function AddForm({ onClose }) {
             className={css.errMessageRooms}
           />
           <button type="submit" className={css.button}>
-            Add apartment
+            {Object.keys(apartment).length === 0
+              ? "Add apartment"
+              : "Update apartment"}
           </button>
         </Form>
       </Formik>

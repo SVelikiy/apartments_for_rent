@@ -2,11 +2,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState} from "react";
 import { fetchFilteredApartments } from "../../redux/apartments/operations";
 import ApartmentItem from "../ApartmentItem/ApartmentItem";
-import { selectApartments } from "../../redux/apartments/selectors";
+import { selectApartments, selectLoading } from "../../redux/apartments/selectors";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { nanoid } from "nanoid";
 import * as Yup from "yup";
 import css from './ApartmentList.module.css'
+import { Hourglass } from "react-loader-spinner";
 
 const FilterSchema = Yup.object().shape({
   maxPrice: Yup.string()
@@ -56,7 +57,8 @@ const maxRoomsId = nanoid();
     );
   }, [dispatch,filters]);
 
-    const apartments = useSelector(selectApartments);
+  const apartments = useSelector(selectApartments);
+  const loading = useSelector(selectLoading);
 
   function handleSubmit(values, actions) {
       setFilters((prevFilters) => ({
@@ -70,6 +72,19 @@ const maxRoomsId = nanoid();
         },
       }));
       setTimeout(() => actions.resetForm(), 0);
+  }
+
+  function handleCancel() {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      filter: {
+        ...prevFilters.filter,
+        maxPrice: "",
+        minPrice: "",
+        maxRooms: "",
+        minRooms: "",
+      },
+    }));
   }
   
   return (
@@ -142,6 +157,15 @@ const maxRoomsId = nanoid();
             </button>
           </Form>
         </Formik>
+        <button
+          type="button"
+          className={css.cancelButton}
+          onClick={() => {
+            handleCancel();
+          }}
+        >
+          Cancel filters
+        </button>
       </div>
       <ul className={css.container}>
         {apartments.map((apartment) => {
@@ -152,6 +176,11 @@ const maxRoomsId = nanoid();
           );
         })}
       </ul>
+      {loading && (
+        <div className={css.spiner}>
+          <Hourglass/>
+        </div>
+      )}
     </div>
   );
 }

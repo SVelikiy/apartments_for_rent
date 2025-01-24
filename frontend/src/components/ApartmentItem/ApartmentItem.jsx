@@ -1,17 +1,11 @@
 import css from "./ApartmentItem.module.css";
-import { useDispatch } from "react-redux";
-import { deleteApartment } from "../../redux/apartments/operations";
-import BaseModal from '../BaseModal/BaseModal';
-import UpdateModal from '../UpdateModal/UpdateModal'
+import BaseModal from "../BaseModal/BaseModal";
 import { useState } from "react";
+import AddForm from "../AddForm/AddForm";
+import DeleteModal from "../DeleteModal/DeleteModal";
+import InfoModal from "../InfoModal/InfoModal";
 
 export default function ApartmentItem({ apartment, filters }) {
-  const dispatch = useDispatch();
-
-  const handleDelete = (id) => {
-    dispatch(deleteApartment(id));
-  };
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleEditClick = () => {
@@ -22,27 +16,50 @@ export default function ApartmentItem({ apartment, filters }) {
     setIsModalOpen(false);
   };
 
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  const handleDeleteEditClick = () => {
+    setIsDeleteModalOpen(true);
+  };
+
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+  };
+
+    const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
+
+    const handleInfoClick = () => {
+      setIsInfoModalOpen(true);
+    };
+
+    const closeInfoModal = () => {
+      setIsInfoModalOpen(false);
+    };
+
   return (
     <div className={css.container}>
-      <div>
-        <img src={apartment.photo} alt="Photo1" />
-      </div>
       <div className={css.infoContainer}>
         <h2 className={css.title}>{apartment.title}</h2>
         <p className={css.text}>
-          <span className={css.textSpan}>Price : </span>
+          <span className={css.textSpan}>Price :</span>
           {apartment.price} USD
         </p>
         <p className={css.text}>
           <span className={css.textSpan}>Rooms : </span> {apartment.rooms}
         </p>
         <p className={css.text}>
-          <span className={css.textSpan}>Description : </span>{" "}
-          <div className={css.descriptionText}>{apartment.info}</div>
+          <span className={css.textSpan}>Description : </span>
         </p>
+        <div className={css.descriptionText}>{apartment.info}</div>
       </div>
       <div className={css.buttonContainer}>
-        <button className={css.buttonEdit} type="button">
+        <button
+          onClick={() => {
+            handleInfoClick();
+          }}
+          className={css.buttonEdit}
+          type="button"
+        >
           Show more
         </button>
         <button
@@ -57,12 +74,18 @@ export default function ApartmentItem({ apartment, filters }) {
         <button
           className={css.buttonDelete}
           type="button"
-          onClick={() => handleDelete(apartment._id)}
+          onClick={() => handleDeleteEditClick()}
         >
           Delete
         </button>
+        <BaseModal isOpen={isInfoModalOpen} onClose={closeInfoModal}>
+          <InfoModal apartment={apartment} />
+        </BaseModal>
+        <BaseModal isOpen={isDeleteModalOpen} onClose={closeDeleteModal}>
+          <DeleteModal onClose={closeDeleteModal} apartment={apartment} />
+        </BaseModal>
         <BaseModal isOpen={isModalOpen} onClose={closeModal}>
-          <UpdateModal
+          <AddForm
             onClose={closeModal}
             apartment={apartment}
             filters={filters}

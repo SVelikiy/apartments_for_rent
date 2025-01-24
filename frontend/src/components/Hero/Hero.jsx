@@ -1,4 +1,5 @@
 import css from './Hero.module.css';
+import { NavLink } from "react-router-dom";
 
 export default function Hero() {
   return (
@@ -8,9 +9,9 @@ export default function Hero() {
         <p className={css.text}>
           You can find everything you want in our catalog
         </p>
-          <button type="button" className={css.button}>
+          <NavLink to='/catalog' className={css.button}>
             View Now
-          </button>
+          </NavLink>
       </div>
     </div>
   );
