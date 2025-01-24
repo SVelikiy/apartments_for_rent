@@ -1,0 +1,35 @@
+.container {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+
+.title {
+  font-size: 36px;
+  color: coral;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
+  border-radius: 200px;
+  padding: 10px 20px;
+  width: 200px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  background: #66aa60;
+  color: #fff;
+  border: none;
+}
+
+.button:hover {
+  background: #439c3b;
+}
