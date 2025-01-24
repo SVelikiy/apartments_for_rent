@@ -55,7 +55,6 @@ export default function CamperList() {
 
   const apartments = useSelector(selectApartments);
   const loading = useSelector(selectLoading);
-  console.log(apartments);
 
   function handleSubmit(values, actions) {
     setFilters((prevFilters) => ({
