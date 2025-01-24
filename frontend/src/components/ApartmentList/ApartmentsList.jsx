@@ -1,12 +1,15 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { fetchFilteredApartments } from "../../redux/apartments/operations";
 import ApartmentItem from "../ApartmentItem/ApartmentItem";
-import { selectApartments, selectLoading } from "../../redux/apartments/selectors";
+import {
+  selectApartments,
+  selectLoading,
+} from "../../redux/apartments/selectors";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { nanoid } from "nanoid";
 import * as Yup from "yup";
-import css from './ApartmentList.module.css'
+import css from "./ApartmentList.module.css";
 import { Hourglass } from "react-loader-spinner";
 
 const FilterSchema = Yup.object().shape({
@@ -16,12 +19,8 @@ const FilterSchema = Yup.object().shape({
   minPrice: Yup.string()
     .min(1, "Too cheap,min 1 dollar")
     .max(10000, "Too much,max 10000 dollar's"),
-  maxRooms: Yup.string()
-    .min(1, "Min 1 room")
-    .max(3, "Max 3 rooms"),
-  minRooms: Yup.string()
-    .min(1, "Min 1 room")
-    .max(3, "Max 3 rooms"),
+  maxRooms: Yup.string().min(1, "Min 1 room").max(3, "Max 3 rooms"),
+  minRooms: Yup.string().min(1, "Min 1 room").max(3, "Max 3 rooms"),
 });
 
 export default function CamperList() {
@@ -32,11 +31,11 @@ export default function CamperList() {
     minRooms: "",
   };
 
-const maxPriceId = nanoid();
-const minPriceId = nanoid();
-const maxRoomsId = nanoid();
+  const maxPriceId = nanoid();
+  const minPriceId = nanoid();
+  const maxRoomsId = nanoid();
   const minRoomsId = nanoid();
-  
+
   const [filters, setFilters] = useState({
     page: 1,
     perPage: 10,
@@ -48,30 +47,28 @@ const maxRoomsId = nanoid();
     minRooms: "",
   });
 
-
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(
-      fetchFilteredApartments(filters)
-    );
-  }, [dispatch,filters]);
+    dispatch(fetchFilteredApartments(filters));
+  }, [dispatch, filters]);
 
   const apartments = useSelector(selectApartments);
   const loading = useSelector(selectLoading);
+  console.log(apartments);
 
   function handleSubmit(values, actions) {
-      setFilters((prevFilters) => ({
-        ...prevFilters,
-        filter: {
-          ...prevFilters.filter,
-          maxPrice: values.maxPrice || "",
-          minPrice: values.minPrice || "",
-          maxRooms: values.maxRooms || "",
-          minRooms: values.minRooms || "",
-        },
-      }));
-      setTimeout(() => actions.resetForm(), 0);
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      filter: {
+        ...prevFilters.filter,
+        maxPrice: values.maxPrice || "",
+        minPrice: values.minPrice || "",
+        maxRooms: values.maxRooms || "",
+        minRooms: values.minRooms || "",
+      },
+    }));
+    setTimeout(() => actions.resetForm(), 0);
   }
 
   function handleCancel() {
@@ -86,9 +83,16 @@ const maxRoomsId = nanoid();
       },
     }));
   }
-  
+
+  function handleLoad() {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      perPage: prevFilters.perPage + 10,
+    }));
+  }
+
   return (
-    <div>
+    <div className={css.containerAll}>
       <div className={css.formContainer}>
         <Formik
           initialValues={apartmentFilter}
@@ -176,9 +180,18 @@ const maxRoomsId = nanoid();
           );
         })}
       </ul>
+      <button
+        className={css.button}
+        type="button"
+        onClick={() => {
+          handleLoad();
+        }}
+      >
+        Load more
+      </button>
       {loading && (
         <div className={css.spiner}>
-          <Hourglass/>
+          <Hourglass />
         </div>
       )}
     </div>
