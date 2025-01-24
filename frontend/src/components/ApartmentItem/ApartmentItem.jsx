@@ -1,14 +1,25 @@
 import css from "./ApartmentItem.module.css";
 import { useDispatch } from "react-redux";
 import { deleteApartment } from "../../redux/apartments/operations";
-import { fetchAllApartments } from "../../redux/apartments/operations";
+import BaseModal from '../BaseModal/BaseModal';
+import UpdateModal from '../UpdateModal/UpdateModal'
+import { useState } from "react";
 
-export default function ApartmentItem({ apartment }) {
+export default function ApartmentItem({ apartment, filters }) {
   const dispatch = useDispatch();
 
   const handleDelete = (id) => {
     dispatch(deleteApartment(id));
-    dispatch(fetchAllApartments());
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleEditClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -34,7 +45,13 @@ export default function ApartmentItem({ apartment }) {
         <button className={css.buttonEdit} type="button">
           Show more
         </button>
-        <button className={css.buttonEdit} type="button">
+        <button
+          className={css.buttonEdit}
+          type="button"
+          onClick={() => {
+            handleEditClick();
+          }}
+        >
           Edit
         </button>
         <button
@@ -44,6 +61,13 @@ export default function ApartmentItem({ apartment }) {
         >
           Delete
         </button>
+        <BaseModal isOpen={isModalOpen} onClose={closeModal}>
+          <UpdateModal
+            onClose={closeModal}
+            apartment={apartment}
+            filters={filters}
+          />
+        </BaseModal>
       </div>
     </div>
   );

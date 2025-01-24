@@ -2,7 +2,7 @@ import './App.css'
 import { Layout } from '../Layout/Layout';
 import HomePage from '../../pages/HomePage/HomePage';
 import { Route, Routes } from 'react-router-dom';
-import ApartmentList from '../ApartmentList/ApartmentsList'
+import Catalog from '../../pages/Catalog/Catalog';
 
 function App() {
 
@@ -11,7 +11,7 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/catalog" element={<ApartmentList />} />
+          <Route path="/catalog" element={<Catalog />} />
         </Routes>
       </Layout>
     </>

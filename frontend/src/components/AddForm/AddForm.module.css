@@ -1,32 +1,13 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.formContainer {
-  background-color: rgb(221, 220, 220);
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 15px;
-}
-.inputContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-}
 .form {
   display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  justify-content: space-between;
-  border-radius: 40px;
+  flex-direction: column;
+  border-radius: 5px;
+  width: 300px;
+  position: relative;
   margin-bottom: 10px;
 }
 
-label {
+.label {
   color: coral;
   padding-left: 10px;
   font-size: 20px;
@@ -34,8 +15,8 @@ label {
 }
 
 .input {
-  width: 150px;
-  height: 40px;
+  width: 350px;
+  height: 50px;
   align-self: center;
   border-radius: 40px;
   margin-bottom: 30px;
@@ -70,31 +51,38 @@ label {
   background: #439c3b;
 }
 
-
-/* .errMessageMAXPrice {
+.errMessageTitle {
   color: red;
   position: absolute;
   left: 10px;
-  top: 100px;
+  top: 90px;
 }
 
-.errMessageMINPrice {
+.errMessageInfo {
   color: red;
   position: absolute;
   left: 10px;
-  top: 200px;
+  top: 210px;
 }
 
-.errMessageMAXRooms {
+.errMessagePrice {
   color: red;
   position: absolute;
   left: 10px;
-  top: 300px;
+  top: 320px;
 }
 
-.errMessageMINRooms {
+.errMessageRooms {
   color: red;
   position: absolute;
   left: 10px;
-  top: 400px;
+  top: 435px;
+}
+
+/* .spiner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
 } */

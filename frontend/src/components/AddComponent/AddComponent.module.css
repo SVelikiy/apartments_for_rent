@@ -1,0 +1,19 @@
+.button {
+  cursor: pointer;
+  pointer-events: auto;
+  border-radius: 200px;
+  padding: 10px 20px;
+  width: 200px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  background: #66aa60;
+  color: #fff;
+  border: none;
+  margin-top: 10px;
+}
+
+.button:hover {
+  background: #439c3b;
+}

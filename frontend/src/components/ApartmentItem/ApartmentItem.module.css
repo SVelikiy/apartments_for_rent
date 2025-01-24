@@ -57,7 +57,13 @@
   border: none;
 }
 
+.buttonDelete:hover {
+  background: #b61212;
+}
+
 .buttonEdit {
+  cursor: pointer;
+  pointer-events: auto;
   border-radius: 200px;
   padding: 10px 20px;
   width: 200px;
@@ -68,6 +74,10 @@
   background: #66aa60;
   color: #fff;
   border: none;
+}
+
+.buttonEdit:hover {
+  background: #2ab61e;
 }
 
 .buttonContainer {

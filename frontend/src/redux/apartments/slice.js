@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchAllApartments, deleteApartment} from './operations';
+import {
+  fetchFilteredApartments,
+  deleteApartment,
+  addApartment,
+  updateApartment
+} from "./operations";
 
 const slice = createSlice({
   name: "apartments",
@@ -10,16 +15,34 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllApartments.fulfilled, (state, action) => {
+      // .addCase(fetchAllApartments.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.items = action.payload.data;
+      // })
+      .addCase(deleteApartment.fulfilled, (state, action) => {
+        state.loading = false;
+        state.items = state.items.filter(
+          (item) => item._id !== action.payload.data._id
+        );
+      })
+      .addCase(addApartment.fulfilled, (state, action) => {
+        state.loading = false;
+        state.items.push(action.payload.data);
+      })
+      .addCase(fetchFilteredApartments.fulfilled, (state, action) => {
         state.loading = false;
         state.items = action.payload.data;
       })
-      .addCase(deleteApartment.fulfilled, (state, action) => {
+      .addCase(updateApartment.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(action.payload)
-        state.items = state.items.filter((apartment) => {
-          apartment._id !== action.payload.data._id;
-        });
+        
+        const updatedApartment = action.payload;
+        const index = state.items.findIndex(
+          (item) => item._id === updatedApartment._id
+        );
+        if (index !== -1) {
+          state.items[index] = { ...state.items[index], ...updatedApartment };
+        }
       });
   },
 });
