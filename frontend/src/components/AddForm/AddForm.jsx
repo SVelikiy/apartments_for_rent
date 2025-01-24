@@ -35,7 +35,6 @@ export default function AddForm({ onClose, apartment = {}, filters = {} }) {
     price: apartment.price || "",
     rooms: apartment.rooms || "",
   };
-  console.log(Object.keys(apartment).length);
 
   const titleId = nanoid();
   const infoId = nanoid();
