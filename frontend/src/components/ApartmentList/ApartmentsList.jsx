@@ -13,14 +13,38 @@ import css from "./ApartmentList.module.css";
 import { Hourglass } from "react-loader-spinner";
 
 const FilterSchema = Yup.object().shape({
-  maxPrice: Yup.string()
-    .min(1, "Too cheap,min 1 dollar")
-    .max(10000, "Too much,max 10000 dollar's"),
-  minPrice: Yup.string()
-    .min(1, "Too cheap,min 1 dollar")
-    .max(10000, "Too much,max 10000 dollar's"),
-  maxRooms: Yup.string().min(1, "Min 1 room").max(3, "Max 3 rooms"),
-  minRooms: Yup.string().min(1, "Min 1 room").max(3, "Max 3 rooms"),
+  maxPrice:  Yup.number()
+      .transform((originalValue) =>
+        originalValue ? Number(originalValue) : 0
+      )
+      .typeError("Price must be a number")
+      .min(1, "Too cheap, minimum $1")
+      .max(10000, "Too expensive, maximum $10,000")
+      .required("This field is required"),
+  minPrice: Yup.number()
+      .transform((originalValue) =>
+        originalValue ? Number(originalValue) : 0
+      )
+      .typeError("Price must be a number")
+      .min(1, "Too cheap, minimum $1")
+      .max(10000, "Too expensive, maximum $10,000")
+      .required("This field is required"),
+  maxRooms: Yup.number()
+      .transform((originalValue) =>
+        originalValue ? Number(originalValue) : 0
+      )
+      .typeError("Rooms must be a number")
+      .min(1, "Minimum 1 room")
+      .max(3, "Maximum 3 rooms")
+      .required("This field is required"),
+  minRooms: Yup.number()
+      .transform((originalValue) =>
+        originalValue ? Number(originalValue) : 0
+      )
+      .typeError("Rooms must be a number")
+      .min(1, "Minimum 1 room")
+      .max(3, "Maximum 3 rooms")
+      .required("This field is required"),
 });
 
 export default function CamperList() {

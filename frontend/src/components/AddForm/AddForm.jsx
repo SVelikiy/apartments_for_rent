@@ -19,10 +19,14 @@ const ApartmentSchema = Yup.object().shape({
     .max(335, "Too long, maximum 335 characters")
     .required("This field is required"),
   price: Yup.number()
+    .transform((originalValue) => (originalValue ? Number(originalValue) : 0))
+    .typeError("Price must be a number")
     .min(1, "Too cheap, minimum $1")
     .max(10000, "Too expensive, maximum $10,000")
     .required("This field is required"),
   rooms: Yup.number()
+    .transform((originalValue) => (originalValue ? Number(originalValue) : 0))
+    .typeError("Rooms must be a number")
     .min(1, "Minimum 1 room")
     .max(3, "Maximum 3 rooms")
     .required("This field is required"),
